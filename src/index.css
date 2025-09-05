@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+/* simple safety styles so white text isn't on white bg */
+html, body, #root { height: 100%; }
+body { background: #0b1220; color: #e5e7eb; }
