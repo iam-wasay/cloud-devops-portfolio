@@ -229,7 +229,7 @@ export default function Portfolio() {
 
             <p className="mt-2 text-xl sm:text-2xl lg:text-3xl text-emerald-400 font-semibold">
               <Typewriter
-                words={["DevOps Engineer", "Cloud Engineer", "SRE Specialist"]}
+                words={["DevOps Engineer", "Cloud & Kubernetes Expert" ]}
                 loop={true}
                 cursor
                 cursorStyle="_"
@@ -263,43 +263,45 @@ export default function Portfolio() {
           </motion.div>
 
           {/* Right column – What I Bring (animated) */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="lg:justify-self-end"
-          >
-            <div className="relative p-1 rounded-3xl bg-gradient-to-br from-emerald-400/40 via-cyan-400/30 to-blue-400/30">
-              <div className="rounded-3xl p-6 bg-slate-900/80 shadow-xl">
-                <h3 className="text-lg font-medium mb-4">What I Bring</h3>
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5, delay: 0.1 }}
+  className="lg:justify-self-end"
+>
+  <div className="relative p-1 rounded-3xl bg-gradient-to-br from-emerald-400/40 via-cyan-400/30 to-blue-400/30">
+    <div className="rounded-3xl p-6 bg-slate-900/80 shadow-xl">
+      <h3 className="text-lg font-medium mb-4">What I Bring</h3>
 
-                <ul className="space-y-3 text-slate-300">
-                  {[
-                    { icon: <ShieldCheck className="w-5 h-5 mt-0.5" />, text: "End-to-End Cloud Infrastructure on AWS, GCP & Azure" },
-                    { icon: <Boxes className="w-5 h-5 mt-0.5" />, text: "Kubernetes Platforms with GitOps (ArgoCD, Helm, Karpenter)" },
-                    { icon: <Terminal className="w-5 h-5 mt-0.5" />, text: "Automated CI/CD Pipelines (GitHub Actions, Terraform, Ansible)" },
-                    { icon: <LineChart className="w-5 h-5 mt-0.5" />, text: "Observability with Prometheus, Grafana, Loki & SLO Dashboards" },
-                    { icon: <Cloud className="w-5 h-5 mt-0.5" />, text: "Multi-Region Disaster Recovery & High Availability Architectures" },
-                    { icon: <Cpu className="w-5 h-5 mt-0.5" />, text: "Security & Compliance (DevSecOps, Trivy, Vault, IAM Hardening)" },
-                    { icon: <ExternalLink className="w-5 h-5 mt-0.5" />, text: "FinOps & Cost Optimization (AWS CUR, QuickSight, Step Functions)" },
-                  ].map((item, i) => (
-                    <motion.li
-                      key={i}
-                      className="flex gap-3 items-start"
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true, margin: "-20% 0px" }}
-                      transition={{ duration: 0.35, delay: i * 0.12 }}
-                      whileHover={{ scale: 1.03 }}
-                    >
-                      <span className="rounded-lg p-1.5 bg-white/10">{item.icon}</span>
-                      <span>{item.text}</span>
-                    </motion.li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </motion.div>
+      <ul className="space-y-3 text-slate-300">
+        {[
+          { icon: <ShieldCheck className="w-5 h-5 mt-0.5" />, text: "End-to-End Cloud Infrastructure on AWS, GCP & Azure" },
+          { icon: <Cloud className="w-5 h-5 mt-0.5" />, text: "Cloud Migration & Modernization (Apps, Databases, Workloads)" },
+          { icon: <Boxes className="w-5 h-5 mt-0.5" />, text: "Deploy containerized workloads on Kubernetes" },
+          { icon: <Terminal className="w-5 h-5 mt-0.5" />, text: "Automated CI/CD Pipelines" },
+          { icon: <LineChart className="w-5 h-5 mt-0.5" />, text: "Observability with Prometheus, Grafana, Loki & SLO Dashboards" },
+          { icon: <Cloud className="w-5 h-5 mt-0.5" />, text: "Multi-Region Disaster Recovery & High Availability Architectures" },
+          { icon: <Cpu className="w-5 h-5 mt-0.5" />, text: "Cloud Security & Compliance" },
+          { icon: <ExternalLink className="w-5 h-5 mt-0.5" />, text: "FinOps & Cost Optimization" },
+        ].map((item, i) => (
+          <motion.li
+            key={i}
+            className="flex gap-3 items-start"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-20% 0px" }}
+            transition={{ duration: 0.35, delay: i * 0.12 }}
+            whileHover={{ scale: 1.03 }}
+          >
+            <span className="rounded-lg p-1.5 bg-white/10">{item.icon}</span>
+            <span>{item.text}</span>
+          </motion.li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</motion.div>
+
         </div>
       </Section>
 
