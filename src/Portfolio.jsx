@@ -1,5 +1,8 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Typewriter } from "react-simple-typewriter";
 import {
+  ArrowUp,
   Github,
   Linkedin,
   Mail,
@@ -107,7 +110,10 @@ const EXPERIENCE = [
 
 function Section({ id, title, children }) {
   return (
-    <section id={id} className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <section
+      id={id}
+      className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 scroll-mt-20"
+    >
       {title ? (
         <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-6">
           {title}
@@ -129,30 +135,67 @@ function Chip({ children }) {
 export default function Portfolio() {
   const year = new Date().getFullYear();
 
+  // Active section highlighting for navbar
+  const [activeSection, setActiveSection] = useState("home");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ["home", "services", "projects", "skills", "experience", "contact"];
+      let current = "home";
+      for (let id of sections) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 80 && rect.bottom >= 80) {
+            current = id;
+            break;
+          }
+        }
+      }
+      setActiveSection(current);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Back-to-top button visibility + action
+  const [showButton, setShowButton] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setShowButton(window.scrollY > 300);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100">
       {/* Nav */}
       <header className="sticky top-0 backdrop-blur bg-slate-900/60 border-b border-white/10 z-20">
         <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
-          {/* (Name removed from navbar) */}
+          {/* Left: nav links */}
           <div className="hidden sm:flex gap-6 text-sm">
-            <a href="#services" className="hover:opacity-80">
-              Services
-            </a>
-            <a href="#projects" className="hover:opacity-80">
-              Projects
-            </a>
-            <a href="#skills" className="hover:opacity-80">
-              Skills
-            </a>
-            <a href="#experience" className="hover:opacity-80">
-              Experience
-            </a>
-            <a href="#contact" className="hover:opacity-80">
-              Contact
-            </a>
+            {[
+              { id: "services", label: "Services" },
+              { id: "projects", label: "Projects" },
+              { id: "skills", label: "Skills" },
+              { id: "experience", label: "Experience" },
+              { id: "contact", label: "Contact" },
+            ].map((link) => (
+              <a
+                key={link.id}
+                href={`#${link.id}`}
+                className={`hover:opacity-80 transition ${
+                  activeSection === link.id ? "text-emerald-400 font-semibold" : "text-slate-300"
+                }`}
+              >
+                {link.label}
+              </a>
+            ))}
           </div>
 
+          {/* Right: socials */}
           <div className="flex gap-3">
             <a href={PROFILE.links.github} aria-label="GitHub" className="hover:opacity-80">
               <Github className="w-5 h-5" />
@@ -175,11 +218,25 @@ export default function Portfolio() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+            <motion.h1
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight"
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: [1, 1.05, 1] }}
+              transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+            >
               {PROFILE.name}
-            </h1>
+            </motion.h1>
+
             <p className="mt-2 text-xl sm:text-2xl lg:text-3xl text-emerald-400 font-semibold">
-              {PROFILE.role}
+              <Typewriter
+                words={["DevOps Engineer", "Cloud Engineer", "SRE Specialist"]}
+                loop={true}
+                cursor
+                cursorStyle="_"
+                typeSpeed={70}
+                deleteSpeed={50}
+                delaySpeed={2000}
+              />
             </p>
 
             <div className="mt-6 flex flex-wrap gap-3">
@@ -405,7 +462,7 @@ export default function Portfolio() {
               </a>
               <a
                 href={PROFILE.links.linkedin}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl border border-white/20 hover:bg:white/10"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl border border-white/20 hover:bg-white/10"
               >
                 <Linkedin className="w-4 h-4" />
                 LinkedIn
@@ -413,7 +470,7 @@ export default function Portfolio() {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-white/10 bg:white/5 p-6">
+          <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
             <h3 className="font-medium">Quick Facts</h3>
             <ul className="mt-3 space-y-2 text-sm text-slate-300">
               <li>Timezone: PKT (UTC+5)</li>
@@ -423,6 +480,21 @@ export default function Portfolio() {
           </div>
         </div>
       </Section>
+
+      {/* Back to Top (animated, pulsing) */}
+      {showButton && (
+        <motion.button
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0, scale: [1, 1.1, 1] }}
+          exit={{ opacity: 0, y: 50 }}
+          transition={{ duration: 0.6, repeat: Infinity, repeatType: "reverse" }}
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 p-3 rounded-full bg-emerald-500 text-white shadow-lg hover:bg-emerald-600 transition"
+          aria-label="Back to top"
+        >
+          <ArrowUp className="w-5 h-5" />
+        </motion.button>
+      )}
 
       <footer className="py-10 text-center text-xs text-slate-400">
         © {year} {PROFILE.name}. Built with ♥️ using React & Tailwind.
