@@ -136,11 +136,23 @@ export default function Portfolio() {
         <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
           {/* (Name removed from navbar) */}
           <div className="hidden sm:flex gap-6 text-sm">
-            <a href="#projects" className="hover:opacity-80">Projects</a>
-            <a href="#skills" className="hover:opacity-80">Skills</a>
-            <a href="#experience" className="hover:opacity-80">Experience</a>
-            <a href="#contact" className="hover:opacity-80">Contact</a>
+            <a href="#services" className="hover:opacity-80">
+              Services
+            </a>
+            <a href="#projects" className="hover:opacity-80">
+              Projects
+            </a>
+            <a href="#skills" className="hover:opacity-80">
+              Skills
+            </a>
+            <a href="#experience" className="hover:opacity-80">
+              Experience
+            </a>
+            <a href="#contact" className="hover:opacity-80">
+              Contact
+            </a>
           </div>
+
           <div className="flex gap-3">
             <a href={PROFILE.links.github} aria-label="GitHub" className="hover:opacity-80">
               <Github className="w-5 h-5" />
@@ -231,6 +243,60 @@ export default function Portfolio() {
               </div>
             </div>
           </motion.div>
+        </div>
+      </Section>
+
+      {/* Services I Offer */}
+      <Section id="services" title="Services I Offer">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            {
+              icon: <Cloud className="w-6 h-6" />,
+              title: "Cloud Infrastructure",
+              desc: "Design & manage scalable, secure, and cost-optimized infrastructures on AWS, GCP & Azure.",
+            },
+            {
+              icon: <Boxes className="w-6 h-6" />,
+              title: "Kubernetes Platforms",
+              desc: "Production-ready Kubernetes clusters with GitOps, ArgoCD, Helm & Karpenter autoscaling.",
+            },
+            {
+              icon: <Terminal className="w-6 h-6" />,
+              title: "CI/CD Automation",
+              desc: "End-to-end automation using GitHub Actions, Terraform & Ansible for faster deployments.",
+            },
+            {
+              icon: <LineChart className="w-6 h-6" />,
+              title: "Monitoring & Observability",
+              desc: "Full-stack observability with Prometheus, Grafana, Loki & SLO-driven dashboards.",
+            },
+            {
+              icon: <ShieldCheck className="w-6 h-6" />,
+              title: "Security & Compliance",
+              desc: "DevSecOps pipelines, vulnerability scanning (Trivy, SonarQube) & IAM hardening.",
+            },
+            {
+              icon: <ExternalLink className="w-6 h-6" />,
+              title: "FinOps & Cost Optimization",
+              desc: "Cloud cost analysis with AWS CUR, QuickSight dashboards & automated optimizations.",
+            },
+          ].map((service, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.1 }}
+              whileHover={{ scale: 1.05 }}
+              className="p-5 rounded-2xl border border-white/10 bg-white/5 shadow hover:shadow-lg"
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 rounded-lg bg-emerald-500/20 text-emerald-400">{service.icon}</div>
+                <h4 className="text-lg font-semibold">{service.title}</h4>
+              </div>
+              <p className="text-sm text-slate-300">{service.desc}</p>
+            </motion.div>
+          ))}
         </div>
       </Section>
 
@@ -339,7 +405,7 @@ export default function Portfolio() {
               </a>
               <a
                 href={PROFILE.links.linkedin}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl border border-white/20 hover:bg-white/10"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl border border-white/20 hover:bg:white/10"
               >
                 <Linkedin className="w-4 h-4" />
                 LinkedIn
@@ -347,7 +413,7 @@ export default function Portfolio() {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <div className="rounded-3xl border border-white/10 bg:white/5 p-6">
             <h3 className="font-medium">Quick Facts</h3>
             <ul className="mt-3 space-y-2 text-sm text-slate-300">
               <li>Timezone: PKT (UTC+5)</li>
